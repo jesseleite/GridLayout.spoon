@@ -55,29 +55,12 @@ function M:setMargins(v)
   return M
 end
 
--- Apply layout.
-function M:applyLayout(key, variant)
-  if key then state.current_layout_key = key end
-  if variant then state.current_layout_variant = variant end
-
-  local layout = state.layouts[state.current_layout_key]
-
-  if layout.apps then
-    helpers.ensureOpenWhenConfigured(layout.apps, state.apps)
-    helpers.hideAllWindowsExcept(layout.apps, state.apps)
-  end
-
-  local elements = helpers.normalizeLayoutForApply(layout, state)
-
-  for _,custom in pairs(state.layout_customizations[state.current_layout_key] or {}) do
-    table.insert(elements, helpers.normalizeElementForApply(custom.app_id, custom.window, custom.cell, layout, state))
-  end
-
-  hs.layout.apply(elements)
-end
-
 -- Open layout selector and apply layout.
-function M:selectLayout()
+function M:selectLayout(layout_key, variant_key)
+  if layout_key then
+    return helpers.applyLayout(layout_key, variant_key, state)
+  end
+
   local choices = {}
 
   for key,layout in pairs(state.layouts) do
@@ -89,7 +72,7 @@ function M:selectLayout()
   end
 
   local chooser = hs.chooser.new(function(choice)
-    M:applyLayout(choice.key)
+    helpers.applyLayout(choice.key, nil, state)
   end)
 
   chooser:searchSubText(true):choices(choices):query(''):show()
@@ -98,7 +81,7 @@ end
 -- Select and apply next layout variant.
 function M:selectNextVariant()
   state:selectNextVariant()
-  M:applyLayout()
+  helpers.applyLayout(nil, nil, state)
 end
 
 -- Bind current app window to a specific cell.
@@ -131,7 +114,7 @@ end
 -- Reset layout customizations
 function M:resetLayout()
   state:resetLayout()
-  M:applyLayout()
+  helpers.applyLayout(nil, nil, state)
 
   return M
 end
@@ -139,7 +122,7 @@ end
 -- Reset all state
 function M:resetAll()
   state:resetAll()
-  M:applyLayout()
+  helpers.applyLayout(nil, nil, state)
 
   return M
 end

@@ -92,12 +92,9 @@ WIP
 
 ## Available Action Methods
 
-WIP
-
 | Method | Params | Description |
 | :--- | :--- | :--- |
-| `layout:selectLayout()` | | Open fuzzy layout selector. |
-| `layout:applyLayout()` | | Programatically apply a specific layout. |
+| `layout:selectLayout()` | `layout_key?`, `variant_key?` | Open fuzzy layout selector, or pass params for specific layout and/or variant. |
 | `layout:selectNextVariant()` | | Select next [layout variant](#defining-layout-variants). |
 | `layout:bindToCell()` | | Bind currently focused app to a specific layout cell. |
 | `layout:resetLayout()` | | Reset currently selected layout state. |

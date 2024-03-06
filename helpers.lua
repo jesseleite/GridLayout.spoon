@@ -3,6 +3,27 @@ local M = {}
 -- Extra grid helper, which maybe we can PR to hammerspoon and/or remove later.
 M.grid = dofile(hs.spoons.resourcePath('grid.lua'))
 
+-- Apply layout.
+function M.applyLayout(key, variant, state)
+  if key then state.current_layout_key = key end
+  if variant then state.current_layout_variant = variant end
+
+  local layout = state.layouts[state.current_layout_key]
+
+  if layout.apps then
+    M.ensureOpenWhenConfigured(layout.apps, state.apps)
+    M.hideAllWindowsExcept(layout.apps, state.apps)
+  end
+
+  local elements = M.normalizeLayoutForApply(layout, state)
+
+  for _,custom in pairs(state.layout_customizations[state.current_layout_key] or {}) do
+    table.insert(elements, M.normalizeElementForApply(custom.app_id, custom.window, custom.cell, layout, state))
+  end
+
+  hs.layout.apply(elements)
+end
+
 -- Normalize layout table from spoon convention for use in hs.layout.apply().
 function M.normalizeLayoutForApply(layout, state)
   if not layout.apps then
