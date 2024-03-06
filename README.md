@@ -1,6 +1,6 @@
 # GridLayout.spoon
 
-Save preset layouts for your most commonly used apps using hs.grid for positioning!
+Save preset layouts for your most commonly used apps using hs.grid for positioning 🖥️
 
 > _NOTE: Experimental! Things may change without notice._
 
@@ -37,12 +37,12 @@ layout
   :setMargins('15x15')
 ```
 
-> _NOTE: These methods will set the above mentioned `hs.grid` methods for you, but will also inform GridLayout.spoon of your grid configuration as well._
+These methods are modeled after [hs.grid's](https://www.hammerspoon.org/docs/hs.grid.html) `setGrid()` and `setMargins()` respectively, and automatically call the aforementioned methods for you, but will also inform GridLayout.spoon of your grid configuration as well.
 
 ## Apps Configuration
 
 ```lua
-layout:apps({
+layout:setApps({
   WezTerm = { id = 'com.github.wez.wezterm' },
   Brave = { id = 'com.brave.Browser' },
   Slack = { id = 'com.tinyspeck.slackmacgap' },
@@ -53,7 +53,9 @@ layout:apps({
 
 ```
 
-> _NOTE: Extracting an [apps.lua](https://github.com/jesseleite/dotfiles/blob/master/hammerspoon/apps.lua) object/module in your hammerspoon config is recommended; It's a nice pattern for assigning app-specific hotkeys, etc. for use throughout your hammerspoon config, but inline is fine too!_
+To find your apps' IDs, simply check your Hammerspoon console to see debug info each time you focus on a new window.
+
+> _TIP: Extracting an [apps.lua](https://github.com/jesseleite/dotfiles/blob/master/hammerspoon/apps.lua) object/module in your hammerspoon config is recommended; It's a nice pattern for assigning app-specific hotkeys, etc. for use throughout your hammerspoon config, but inline is fine too!_
 
 ## Layouts Configuration
 
@@ -84,11 +86,28 @@ layout:setLayouts({
 })
 ```
 
-> _NOTE: You may define as many layouts as you wish! Extracting [layouts.lua](https://github.com/jesseleite/dotfiles/blob/master/hammerspoon/layouts.lua) object/module in your hammerspoon config is recommended, but inline is fine too!_
+To learn more about this grid cell syntax, check out the official [hs.grid](https://www.hammerspoon.org/docs/hs.grid.html) documentation.
+
+> TIP: You may define as many layouts as you wish! Extracting [layouts.lua](https://github.com/jesseleite/dotfiles/blob/master/hammerspoon/layouts.lua) object/module in your hammerspoon config is recommended, but inline is fine too!_
 
 ### Defining Layout Variants
 
-WIP
+```lua
+layout:setLayouts({
+  {
+    name = 'Standard Dev', -- Define a 'Standard Dev' layout
+    cells = {
+      { '0,0 7x20', '0,0 7x20' },     -- Define more than one variant for each of your cells.
+      { '7,0 21x20', '7,0 30x20' },   -- Whether or not these change, you must provide an
+      { '28,0 32x20', '37,0 23x20' }, -- equal no. of variants for each cell defined.
+      { '42,2 16x16', '42,2 16x16' },
+    },
+    -- etc.
+  }
+})
+```
+
+You can then cycle between these variants with `selectNextVariant()` (see [available methods](#available-action-methods) below).
 
 ## Available Action Methods
 
