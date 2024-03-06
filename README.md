@@ -22,7 +22,7 @@ Also special thank you to my brother-in-arms [Evan Travers](https://github.com/e
 
 1. MacOS
 2. [Hammerspoon](https://www.hammerspoon.org/go/)
-3. Download a [release](https://github.com/jesseleite/GridLayout.spoon/releases) to `~/.hammerspoon/Spoons/Headspace.spoon`
+3. Download a [release](https://github.com/jesseleite/GridLayout.spoon/releases) to `~/.hammerspoon/Spoons/GridLayout.spoon`
 4. Load the Spoon by adding the following code snippet to `~/.hammerspoon/init.lua`:
 
 ```lua
