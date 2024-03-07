@@ -18,7 +18,7 @@ This has largely been a back-and-forth collab between my lovely co-worker [Jason
 
 Also special thank you to my brother-in-arms [Evan Travers](https://github.com/evantravers) for all the insanely helpful [Hammerspoon blog posts](https://evantravers.com/articles/tags/hammerspoon/) and example [Spoons](https://github.com/evantravers?tab=repositories&q=spoon), which have proven immensely useful in this Hammerspoon journey 💘
 
-## Install
+## Installation
 
 1. MacOS
 2. [Hammerspoon](https://www.hammerspoon.org/go/)
@@ -118,3 +118,21 @@ You can then cycle between these variants with `selectNextVariant()` (see [avail
 | `layout:bindToCell()` | | Bind currently focused app to a specific layout cell. |
 | `layout:resetLayout()` | | Reset currently selected layout state. |
 | `layout:resetAll()` | | Reset all in-memory GridLayout.spoon state. |
+
+## Roadmap
+
+### Features
+
+- For sure:
+  - `layout:focusNextInCell()`
+  - `layout:hideFloating()`
+  - `layout:toggleMaximized()`
+- Maybe:
+  - `layout:verticallySplitAndBind()`?
+  - `layout:horizontallySplitAndBind()`?
+  - etc.
+
+### Improvements
+
+- Filter out windows that don't need to move to reduce flicker?
+- Don't require app IDs? (`hs.layout.apply()` can also accept application name)
