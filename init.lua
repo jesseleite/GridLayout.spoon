@@ -1,4 +1,14 @@
-local M = {}
+--------------------------------------------------------------------------------
+-- GridLayout.spoon
+--------------------------------------------------------------------------------
+
+local M = {
+  name = 'GridLayout',
+  version = '0.2.1',
+  author = 'Jesse Leite <jesseleite@gmail.com>',
+  license = 'MIT <https://opensource.org/licenses/MIT>',
+  homepage = 'https://github.com/jesseleite/GridLayout.spoon',
+}
 
 local state
 local events
