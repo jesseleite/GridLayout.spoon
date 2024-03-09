@@ -127,6 +127,7 @@ You can then cycle between these variants with `selectNextVariant()` (see [avail
   - `layout:focusNextInCell()`
   - `layout:hideFloating()`
   - `layout:toggleMaximized()`
+  - `hammerspoon://` interface for Raycast, etc. integration
 - Maybe:
   - `layout:verticallySplitAndBind()`?
   - `layout:horizontallySplitAndBind()`?
