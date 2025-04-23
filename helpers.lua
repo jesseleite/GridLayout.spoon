@@ -104,7 +104,9 @@ function M.listAppsInCells(layout, state)
   end
 
   for _,config in pairs(state.layout_customizations[state.current_layout_key] or {}) do
-    table.insert(cells[config.cell].apps, config.window:application():name()..' ('..config.window:title()..', '..config.window:id()..')')
+    if config.window:application() then
+      table.insert(cells[config.cell].apps, config.window:application():name()..' ('..config.window:title()..', '..config.window:id()..')')
+    end
   end
 
   return cells
