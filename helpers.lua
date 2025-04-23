@@ -103,9 +103,13 @@ function M.listAppsInCells(layout, state)
     table.insert(cells[config.cell].apps, app)
   end
 
-  for _,config in pairs(state.layout_customizations[state.current_layout_key] or {}) do
+  for key,config in pairs(state.layout_customizations[state.current_layout_key] or {}) do
     if config.window:application() then
       table.insert(cells[config.cell].apps, config.window:application():name()..' ('..config.window:title()..', '..config.window:id()..')')
+    else
+      state.layout_customizations[state.current_layout_key][key] = nil
+      print("cleaned up non-existent window layout config")
+      -- TODO: Extract config validate and cleanup logic, so that this can be used elsewhere
     end
   end
 
