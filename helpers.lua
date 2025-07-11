@@ -116,4 +116,20 @@ function M.listAppsInCells(layout, state)
   return cells
 end
 
+-- Normalize layouts
+function M.normalizeLayouts(layouts)
+  local normalized = layouts or {}
+
+  -- Normalize cell strings to variant-friendly tables
+  for layoutKey,layout in ipairs(layouts or {}) do
+    local cells = {}
+    for _,cell in ipairs(layout.cells or {}) do
+      table.insert(cells, type(cell) == "string" and { cell } or cell)
+    end
+    normalized[layoutKey].cells = cells
+  end
+
+  return normalized
+end
+
 return M

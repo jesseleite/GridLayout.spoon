@@ -64,10 +64,10 @@ layout:setLayouts({
   {
     name = 'Standard Dev', -- Define a 'Standard Dev' layout
     cells = {
-      { '0,0 7x20' },   -- Cell 1
-      { '7,0 21x20' },  -- Cell 2
-      { '28,0 32x20' }, -- Cell 3
-      { '42,2 16x16' }, -- Cell 4
+      '0,0 7x20',   -- Cell 1
+      '7,0 21x20',  -- Cell 2
+      '28,0 32x20', -- Cell 3
+      '42,2 16x16', -- Cell 4
     },
     apps = {
       Ray = { cell = 1, open = true },     -- Assign to cell 1, and ensure app opens

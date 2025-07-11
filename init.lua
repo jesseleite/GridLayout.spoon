@@ -32,7 +32,7 @@ end
 -- Set preset layouts to be managed by this spoon.
 -- See README.md for table conventions.
 function M:setLayouts(v)
-  state.layouts = v
+  state.layouts = helpers.normalizeLayouts(v)
 
   return M
 end
