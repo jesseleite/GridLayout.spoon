@@ -66,8 +66,9 @@ function M.ensureOpenWhenConfigured(layoutApps, allApps)
     else
       app = hs.application.get(allApps[name].id or name)
     end
-    if app == nil then return end
-    app:unhide()
+    if app then
+      app:unhide()
+    end
   end
 end
 
