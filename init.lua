@@ -65,12 +65,8 @@ function M:setMargins(v)
   return M
 end
 
--- Open layout selector and apply layout.
-function M:selectLayout(layout_key, variant_key)
-  if layout_key then
-    return helpers.applyLayout(layout_key, variant_key, state)
-  end
-
+-- Get all layouts from config.
+function M:all()
   local choices = {}
 
   for key,layout in pairs(state.layouts) do
@@ -80,6 +76,17 @@ function M:selectLayout(layout_key, variant_key)
       ['key'] = key,
     })
   end
+
+  return choices
+end
+
+-- Open layout selector and apply layout.
+function M:selectLayout(layout_key, variant_key)
+  if layout_key then
+    return helpers.applyLayout(layout_key, variant_key, state)
+  end
+
+  local choices = M:getLayoutChoices()
 
   local chooser = hs.chooser.new(function(choice)
     helpers.applyLayout(choice.key, nil, state)

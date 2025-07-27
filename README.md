@@ -113,6 +113,7 @@ You can then cycle between these variants with `selectNextVariant()` (see [avail
 
 | Method | Params | Description |
 | :--- | :--- | :--- |
+| `layout:all()` | | Get configured layouts. |
 | `layout:selectLayout()` | `layout_key?`, `variant_key?` | Open fuzzy layout selector, or pass params for specific layout and/or variant. |
 | `layout:selectNextVariant()` | | Select next [layout variant](#defining-layout-variants). |
 | `layout:bindToCell()` | | Bind currently focused app to a specific layout cell. |
