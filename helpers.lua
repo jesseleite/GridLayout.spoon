@@ -133,4 +133,15 @@ function M.normalizeLayouts(layouts)
   return normalized
 end
 
+-- Apply bind to cell
+function M.applyBindToCell(key, state)
+  local app_id = hs.window.focusedWindow():application():bundleID()
+  local window = hs.window.focusedWindow()
+  local layout = state.layouts[state.current_layout_key]
+
+  hs.layout.apply({M.normalizeElementForApply(app_id, window, key, layout, state)})
+
+  state.addLayoutCustomization(app_id, window, key)
+end
+
 return M

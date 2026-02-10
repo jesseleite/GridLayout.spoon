@@ -116,7 +116,7 @@ You can then cycle between these variants with `selectNextVariant()` (see [avail
 | `layout:all()` | | Get configured layouts. |
 | `layout:selectLayout()` | `layout_key?`, `variant_key?` | Open fuzzy layout selector, or pass params for specific layout and/or variant. |
 | `layout:selectNextVariant()` | | Select next [layout variant](#defining-layout-variants). |
-| `layout:bindToCell()` | | Bind currently focused app to a specific layout cell. |
+| `layout:bindToCell()` | `cell_key?` | Open fuzzy cell selector, or pass params to bind currently focused app to a specific layout cell. |
 | `layout:resetLayout()` | | Reset currently selected layout state. |
 | `layout:resetAll()` | | Reset all in-memory GridLayout.spoon state. |
 

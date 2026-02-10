@@ -102,7 +102,11 @@ function M:selectNextVariant()
 end
 
 -- Bind current app window to a specific cell.
-function M:bindToCell()
+function M:bindToCell(cell_key)
+  if cell_key then
+    return helpers.applyBindToCell(cell_key, state)
+  end
+
   local layout = state.layouts[state.current_layout_key]
   local cells = helpers.listAppsInCells(layout, state)
 
@@ -117,12 +121,7 @@ function M:bindToCell()
   end
 
   local chooser = hs.chooser.new(function(choice)
-    local app_id = hs.window.focusedWindow():application():bundleID()
-    local window = hs.window.focusedWindow()
-
-    hs.layout.apply({helpers.normalizeElementForApply(app_id, window, choice.cell, layout, state)})
-
-    state.addLayoutCustomization(app_id, window, choice.cell)
+    helpers.applyBindToCell(choice.cell, state)
   end)
 
   chooser:searchSubText(true):choices(choices):query(''):show()
