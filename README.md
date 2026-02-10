@@ -12,12 +12,6 @@ Automatic tiling managers like Yabai are also rad, but are often too intrusive.
 
 This spoon is an opinionated 'best-of-both-worlds' approach, allowing you to control your own floating windows, but with an easy way to automatically position your most common used apps into nice grid-based preset layouts.
 
-## Credit
-
-This has largely been a back-and-forth collab between my lovely co-worker [Jason Varga](https://github.com/jasonvarga) and I, but Jason deserves much of the credit for this layout system ❤️‍🔥
-
-Also special thank you to my brother-in-arms [Evan Travers](https://github.com/evantravers) for all the insanely helpful [Hammerspoon blog posts](https://evantravers.com/articles/tags/hammerspoon/) and example [Spoons](https://github.com/evantravers?tab=repositories&q=spoon), which have proven immensely useful in this Hammerspoon journey 💘
-
 ## Installation
 
 1. MacOS
@@ -138,3 +132,11 @@ You can then cycle between these variants with `selectNextVariant()` (see [avail
 
 - Filter out windows that don't need to move to reduce flicker?
 - Don't require app IDs? (`hs.layout.apply()` can also accept application name)
+
+## Thank You!
+
+This largely started as a back-and-forth collab between my lovely friend [Jason Varga](https://github.com/jasonvarga) and I. Jason deserves much credit for this layout system! ❤️‍🔥
+
+Also special thank you to my brother-in-arms [Evan Travers](https://github.com/evantravers) for all the insanely helpful [Hammerspoon blog posts](https://evantravers.com/articles/tags/hammerspoon/) and example [Spoons](https://github.com/evantravers?tab=repositories&q=spoon), which have proven immensely useful in this Hammerspoon journey 💘
+
+Also thank you to [Matthew DeGarmo](https://github.com/techdufus) for being my one and only user, aside from myself 🏆
