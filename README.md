@@ -105,7 +105,24 @@ You can then cycle between these variants with `selectNextVariant()` (see [avail
 
 ### Targeting Multiple Screens
 
-By default, each cell is resolved against Hammerspoon's main screen. To target a specific screen, replace a cell string with a table containing `cell` and `screen`:
+By default, each cell is resolved against Hammerspoon's main screen. To target a specific screen, replace a cell string with a table containing `cell` and `screen`.
+
+The `screen` value may be:
+- a display name
+- a display UUID
+- an `hs.screen` object
+
+This is fully opt-in. Existing string-only cells and existing variant arrays continue to work unchanged.
+
+```lua
+-- Legacy single-screen cell (still valid)
+'0,0 32x20'
+
+-- Screen-aware single cell
+{ cell = '0,0 32x20', screen = 'Built-in Retina Display' }
+```
+
+Screen-aware cells can also be used inside variant arrays:
 
 ```lua
 layout:setLayouts({

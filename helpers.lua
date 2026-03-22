@@ -3,6 +3,7 @@ local M = {}
 -- Extra grid helper, which maybe we can PR to hammerspoon and/or remove later.
 M.grid = dofile(hs.spoons.resourcePath('grid.lua'))
 
+-- Legacy cells are strings, while screen-aware cells opt into a keyed table.
 local function isScreenAwareCell(cell)
   return type(cell) == "table" and (cell.cell ~= nil or cell.screen ~= nil)
 end
