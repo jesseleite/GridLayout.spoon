@@ -111,19 +111,24 @@ helpers.applyLayout(1, 1, state)
 
 assert(byAppId(captured, 'term')[5].cell == '0,0 30x20', 'legacy string cells should still normalize')
 assert(byAppId(captured, 'term')[5].screen == 'MAIN', 'legacy string cells should still resolve to the main screen')
+assert(byAppId(captured, 'term')[3] == nil, 'legacy string cells should not force a display override')
 
 assert(byAppId(captured, 'browser')[5].cell == '30,0 30x20', 'legacy variant arrays should still normalize')
 assert(byAppId(captured, 'browser')[5].screen == 'MAIN', 'legacy variant arrays should still resolve to the main screen')
+assert(byAppId(captured, 'browser')[3] == nil, 'legacy variant arrays should not force a display override')
 
 assert(byAppId(captured, 'slack')[5].cell == '0,0 15x20', 'screen-aware cells should resolve nested cell values')
 assert(byAppId(captured, 'slack')[5].screen == 'SCREEN<UUID-1>', 'screen-aware cells should resolve target screens')
+assert(byAppId(captured, 'slack')[3] == 'SCREEN<UUID-1>', 'screen-aware cells should pass the target display to hs.layout.apply')
 
 assert(byAppId(captured, 'obsidian')[5].cell == '0,0 20x20', 'screen-aware variant arrays should resolve correctly')
 assert(byAppId(captured, 'obsidian')[5].screen == 'SCREEN<External Display>', 'screen-aware variant arrays should resolve screen refs')
+assert(byAppId(captured, 'obsidian')[3] == 'SCREEN<External Display>', 'screen-aware variant arrays should pass the resolved display through')
 
 helpers.applyLayout(1, 2, state)
 
 assert(byAppId(captured, 'obsidian')[5].cell == '20,0 40x20', 'mixed variant arrays should still allow plain string variants')
 assert(byAppId(captured, 'obsidian')[5].screen == 'MAIN', 'plain string variants should still fall back to the main screen')
+assert(byAppId(captured, 'obsidian')[3] == nil, 'plain string variants should not set an explicit display')
 
 print('helpers_spec ok')

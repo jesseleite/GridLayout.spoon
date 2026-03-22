@@ -87,7 +87,7 @@ function M.normalizeElementForApply(app_id, window, cell, layout, state)
   return {
     app_id,
     window,
-    nil,
+    screen,
     nil,
     M.grid.getCellWithMargins(cellVariant, screen),
   }
