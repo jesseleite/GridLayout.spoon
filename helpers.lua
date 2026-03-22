@@ -3,6 +3,40 @@ local M = {}
 -- Extra grid helper, which maybe we can PR to hammerspoon and/or remove later.
 M.grid = dofile(hs.spoons.resourcePath('grid.lua'))
 
+local function isScreenAwareCell(cell)
+  return type(cell) == "table" and (cell.cell ~= nil or cell.screen ~= nil)
+end
+
+local function normalizeCellVariants(cell)
+  if type(cell) == "string" then
+    return { cell }
+  end
+
+  if isScreenAwareCell(cell) then
+    return { cell }
+  end
+
+  return cell
+end
+
+local function resolveScreen(screenRef)
+  if screenRef == nil then
+    return nil
+  end
+
+  return hs.screen.find(screenRef) or screenRef
+end
+
+local function resolveCellVariant(layout, cell, state)
+  local variant = layout.cells[cell][state.current_layout_variant]
+
+  if isScreenAwareCell(variant) then
+    return variant.cell, resolveScreen(variant.screen)
+  end
+
+  return variant, nil
+end
+
 -- Apply layout.
 function M.applyLayout(key, variant, state)
   if key then state.current_layout_key = key end
@@ -47,12 +81,14 @@ end
 
 -- Apply single layout element for use in hs.layout.apply.
 function M.normalizeElementForApply(app_id, window, cell, layout, state)
+  local cellVariant, screen = resolveCellVariant(layout, cell, state)
+
   return {
     app_id,
     window,
     nil,
     nil,
-    M.grid.getCellWithMargins(layout.cells[cell][state.current_layout_variant]),
+    M.grid.getCellWithMargins(cellVariant, screen),
   }
 end
 
@@ -125,7 +161,7 @@ function M.normalizeLayouts(layouts)
   for layoutKey,layout in ipairs(layouts or {}) do
     local cells = {}
     for _,cell in ipairs(layout.cells or {}) do
-      table.insert(cells, type(cell) == "string" and { cell } or cell)
+      table.insert(cells, normalizeCellVariants(cell))
     end
     normalized[layoutKey].cells = cells
   end

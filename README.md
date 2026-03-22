@@ -103,6 +103,33 @@ layout:setLayouts({
 
 You can then cycle between these variants with `selectNextVariant()` (see [available methods](#available-action-methods) below).
 
+### Targeting Multiple Screens
+
+By default, each cell is resolved against Hammerspoon's main screen. To target a specific screen, replace a cell string with a table containing `cell` and `screen`:
+
+```lua
+layout:setLayouts({
+  {
+    name = 'Desk Setup',
+    cells = {
+      { cell = '0,0 32x20', screen = 'Built-in Retina Display' },
+      { cell = '32,0 28x20', screen = hs.screen.find('DELL U2720Q') },
+      {
+        { cell = '0,0 60x20', screen = 'Built-in Retina Display' },
+        { cell = '0,0 60x20', screen = hs.screen.find('DELL U2720Q') },
+      },
+    },
+    apps = {
+      WezTerm = { cell = 1, open = true },
+      Brave = { cell = 2, open = true },
+      Slack = { cell = 3 },
+    },
+  },
+})
+```
+
+Single-screen configs remain valid. Screen-aware cells are optional and can be mixed with string cells inside the same layout.
+
 ## Available Action Methods
 
 | Method | Params | Description |
