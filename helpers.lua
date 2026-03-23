@@ -25,11 +25,12 @@ local function resolveScreen(screenRef)
     return nil
   end
 
-  return hs.screen.find(screenRef) or screenRef
+  return M.grid.resolveScreen(screenRef) or screenRef
 end
 
 local function resolveCellVariant(layout, cell, state)
-  local variant = layout.cells[cell][state.current_layout_variant]
+  local variants = layout.cells[cell]
+  local variant = variants[state.current_layout_variant] or variants[1]
 
   if isScreenAwareCell(variant) then
     return variant.cell, resolveScreen(variant.screen)
