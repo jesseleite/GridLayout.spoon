@@ -27,8 +27,26 @@ end
 
 local min,max = math.min,math.max
 
+local function findScreenByExactName(screenName)
+  for _, candidate in ipairs(screen.allScreens()) do
+    if candidate:name() == screenName then
+      return candidate
+    end
+  end
+end
+
+function M.resolveScreen(scr)
+  local resolved = screen.find(scr)
+
+  if resolved ~= nil or type(scr) ~= 'string' then
+    return resolved
+  end
+
+  return findScreenByExactName(scr)
+end
+
 function M.getCellWithMargins(cell, scr)
-  scr=screen.find(scr)
+  scr=M.resolveScreen(scr)
   if not scr then scr=hs.screen.mainScreen() end
   cell=geom.new(cell)
   local screenrect = grid.getGridFrame(scr)
