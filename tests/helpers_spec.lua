@@ -206,15 +206,23 @@ helpers.applyLayout(1, 1, state)
 
 assert(byAppId(captured, 'term')[5].x == 5, 'legacy string cells should still compute against the main screen')
 assert(byAppId(captured, 'term')[3] == nil, 'legacy string cells should not force a display override')
+assert(byAppId(captured, 'term').options.absolute_x == true, 'absolute x coordinates should be preserved for frame rects')
+assert(byAppId(captured, 'term').options.absolute_y == true, 'absolute y coordinates should be preserved for frame rects')
 
 assert(byAppId(captured, 'browser')[5].x == 302.5, 'legacy variant arrays should still normalize')
 assert(byAppId(captured, 'browser')[3] == nil, 'legacy variant arrays should not force a display override')
+assert(byAppId(captured, 'browser').options.absolute_x == true, 'absolute x coordinates should be preserved for variant frames')
+assert(byAppId(captured, 'browser').options.absolute_y == true, 'absolute y coordinates should be preserved for variant frames')
 
 assert(byAppId(captured, 'slack')[5].x == 605, 'screen-aware cells should compute against UUID-matched screens')
 assert(byAppId(captured, 'slack')[3] == screens.external, 'screen-aware cells should pass the resolved display to hs.layout.apply')
+assert(byAppId(captured, 'slack').options.absolute_x == true, 'screen-aware cells should preserve negative-capable absolute x coordinates')
+assert(byAppId(captured, 'slack').options.absolute_y == true, 'screen-aware cells should preserve negative-capable absolute y coordinates')
 
 assert(byAppId(captured, 'obsidian')[5].x == 1205, 'screen-aware variant arrays should honor literal display names with Lua pattern chars')
 assert(byAppId(captured, 'obsidian')[3] == screens.builtIn, 'screen-aware variant arrays should pass exact-name displays through as screen objects')
+assert(byAppId(captured, 'obsidian').options.absolute_x == true, 'screen-aware variants should preserve absolute x coordinates')
+assert(byAppId(captured, 'obsidian').options.absolute_y == true, 'screen-aware variants should preserve absolute y coordinates')
 
 helpers.applyLayout(1, 2, state)
 

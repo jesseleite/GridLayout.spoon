@@ -91,6 +91,10 @@ function M.normalizeElementForApply(app_id, window, cell, layout, state)
     screen,
     nil,
     M.grid.getCellWithMargins(cellVariant, screen),
+    options = {
+      absolute_x = true,
+      absolute_y = true,
+    },
   }
 end
 
