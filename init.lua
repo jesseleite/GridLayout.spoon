@@ -4,7 +4,7 @@
 
 local M = {
   name = 'GridLayout',
-  version = '0.2.1',
+  version = '0.3.2',
   author = 'Jesse Leite <jesseleite@gmail.com>',
   license = 'MIT <https://opensource.org/licenses/MIT>',
   homepage = 'https://github.com/jesseleite/GridLayout.spoon',

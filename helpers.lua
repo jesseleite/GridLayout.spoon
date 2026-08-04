@@ -39,10 +39,37 @@ local function resolveCellVariant(layout, cell, state)
   return variant, nil
 end
 
+local function captureWindowOrder()
+  return {
+    ordered = hs.window.orderedWindows(),
+    focused = hs.window.focusedWindow(),
+  }
+end
+
+local function restoreWindowOrder(snapshot)
+  if not snapshot or not snapshot.ordered then
+    return
+  end
+
+  for i = #snapshot.ordered, 1, -1 do
+    local win = snapshot.ordered[i]
+    if win and win:application() and win:isVisible() then
+      win:raise()
+    end
+  end
+
+  local focused = snapshot.focused
+  if focused and focused:application() and focused:isVisible() then
+    focused:focus()
+  end
+end
+
 -- Apply layout.
 function M.applyLayout(key, variant, state)
   if key then state.current_layout_key = key end
   if variant then state.current_layout_variant = variant end
+
+  local windowOrder = captureWindowOrder()
 
   local layout = state.layouts[state.current_layout_key]
 
@@ -58,6 +85,8 @@ function M.applyLayout(key, variant, state)
   end
 
   hs.layout.apply(elements)
+
+  restoreWindowOrder(windowOrder)
 end
 
 -- Normalize layout table from spoon convention for use in hs.layout.apply().

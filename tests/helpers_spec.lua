@@ -79,6 +79,29 @@ local screens = {
 local allScreens = { screens.main, screens.external, screens.builtIn }
 
 local captured = {}
+local raiseOrder = {}
+local focusedAfterRestore = nil
+
+local function mockWindow(name)
+  return {
+    _name = name,
+    _visible = true,
+    application = function() return { name = name } end,
+    isVisible = function(self) return self._visible end,
+    raise = function(self)
+      table.insert(raiseOrder, self._name)
+    end,
+    focus = function(self)
+      focusedAfterRestore = self._name
+    end,
+  }
+end
+
+local winFront = mockWindow('front')
+local winMiddle = mockWindow('middle')
+local winBack = mockWindow('back')
+local orderedWindows = { winFront, winMiddle, winBack }
+local focusedWindow = winMiddle
 
 hs = {
   spoons = {
@@ -129,6 +152,9 @@ hs = {
   layout = {
     apply = function(elements)
       captured = elements
+      -- Simulate layout apply scrambling z-order before restore runs.
+      raiseOrder = {}
+      focusedAfterRestore = nil
     end,
   },
   application = {
@@ -137,6 +163,8 @@ hs = {
   },
   window = {
     visibleWindows = function() return {} end,
+    orderedWindows = function() return orderedWindows end,
+    focusedWindow = function() return focusedWindow end,
   },
   fnutils = {
     find = function() return nil end,
@@ -228,5 +256,28 @@ helpers.applyLayout(1, 2, state)
 
 assert(byAppId(captured, 'obsidian')[5].x == 202.5, 'mixed variant arrays should still allow plain string variants')
 assert(byAppId(captured, 'obsidian')[3] == nil, 'plain string variants should not set an explicit display')
+
+-- Z-order restore: raise back-to-front, then re-focus prior focused window.
+raiseOrder = {}
+focusedAfterRestore = nil
+helpers.applyLayout(1, 1, state)
+
+assert(
+  table.concat(raiseOrder, ',') == 'back,middle,front',
+  'applyLayout should restore stacking by raising windows back-to-front'
+)
+assert(focusedAfterRestore == 'middle', 'applyLayout should restore the previously focused window')
+
+-- Invisible windows should be skipped during restore.
+winMiddle._visible = false
+raiseOrder = {}
+focusedAfterRestore = nil
+helpers.applyLayout(1, 1, state)
+
+assert(
+  table.concat(raiseOrder, ',') == 'back,front',
+  'applyLayout should skip invisible windows when restoring z-order'
+)
+assert(focusedAfterRestore == nil, 'applyLayout should not re-focus an invisible window')
 
 print('helpers_spec ok')
